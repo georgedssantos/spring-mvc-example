@@ -1,4 +1,5 @@
-package com.company.titulo.model;
+package com.company.titulo.model.entity;
+
 
 import java.math.BigDecimal;
 import java.util.Date;
