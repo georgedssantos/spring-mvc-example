@@ -1,13 +1,19 @@
 package com.company.titulo.controller;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.company.titulo.model.entity.Titulo;
-import com.company.titulo.repository.ITituloRepository;
+import com.company.titulo.model.enums.StatusTitulo;
+import com.company.titulo.model.repository.ITituloRepository;
 
 
 @Controller
@@ -23,12 +29,18 @@ public class TituloController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String salvar(Titulo titulo) {
-		// TODO : SALVAR NO BANCO DE DADOS
+	public ModelAndView salvar(Titulo titulo) {
 		
 		this.tituloRepository.save(titulo);
 		
-		return "CadastroTitulo";
+		ModelAndView mv = new ModelAndView("CadastroTitulo");
+		mv.addObject("mensagem", "Título salvo com sucesso!");
+		return mv;
+	}
+	
+	@ModelAttribute("todosStatusTitulo")
+	public List<StatusTitulo> todosStatusTitulo() {
+		return Arrays.asList(StatusTitulo.values());
 	}
 
 }
