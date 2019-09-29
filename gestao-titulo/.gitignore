@@ -1,10 +1,35 @@
 HELP.md
-target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 
-### STS ###
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+
+##########################
+## Java
+##########################
+*.class
+.mtj.tmp/
+
+##########################
+## STS
+##########################
 .apt_generated
 .classpath
 .factorypath
@@ -13,24 +38,58 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+##########################
+## Maven
+##########################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+##########################
+## IntelliJ
+##########################
 *.iml
+.idea
 *.ipr
+*.iws
+out/
+.idea_modules/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+##########################
+## Eclipse
+##########################
+.metadata
+.classpath
+.project
+.settings/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+
+##########################
+## NetBeans
+##########################
+nbproject/private/
 build/
-
-### VS Code ###
-.vscode/
+/nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+/.nb-gradle/
 
 ##########################
 ## OS X
 ##########################
 .DS_Store
+
+### VS Code ###
+.vscode/
