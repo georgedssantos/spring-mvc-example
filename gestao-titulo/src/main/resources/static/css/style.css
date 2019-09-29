@@ -1,8 +1,9 @@
-.navbar-brand {
-	padding-top: 12px;
+.card {
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
-.panel-default {
+.form-group {
 	margin-left: 10px;
 	margin-right: 10px;
 }
@@ -11,4 +12,5 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
 
