@@ -25,7 +25,7 @@ public class TituloController {
 	
 	@RequestMapping("/novo")
 	public String novo() {
-		return "CadastroTitulo";
+		return "CadastrarTitulo";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -33,7 +33,7 @@ public class TituloController {
 		
 		this.tituloRepository.save(titulo);
 		
-		ModelAndView mv = new ModelAndView("CadastroTitulo");
+		ModelAndView mv = new ModelAndView("CadastrarTitulo");
 		mv.addObject("mensagem", "Título salvo com sucesso!");
 		return mv;
 	}
