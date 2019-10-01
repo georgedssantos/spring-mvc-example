@@ -23,9 +23,14 @@ public class TituloController {
 	@Autowired
 	private ITituloRepository tituloRepository;
 	
+	@RequestMapping
+	public String pesquisar() {
+		return "pesquisarTitulos";
+	}
+	
 	@RequestMapping("/novo")
 	public String novo() {
-		return "CadastrarTitulo";
+		return "cadastrarTitulo";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -33,16 +38,11 @@ public class TituloController {
 		
 		this.tituloRepository.save(titulo);
 		
-		ModelAndView mv = new ModelAndView("CadastrarTitulo");
+		ModelAndView mv = new ModelAndView("cadastrarTitulo");
 		mv.addObject("mensagem", "Título salvo com sucesso!");
 		return mv;
 	}
-	
-	@RequestMapping
-	public String pesquisar() {
-		return "PesquisarTitulos";
-	}
-	
+		
 	@ModelAttribute("todosStatusTitulo")
 	public List<StatusTitulo> todosStatusTitulo() {
 		return Arrays.asList(StatusTitulo.values());
