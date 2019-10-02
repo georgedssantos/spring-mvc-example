@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.company.titulo.model.entity.Titulo;
 import com.company.titulo.model.enums.StatusTitulo;
-import com.company.titulo.model.repository.ITituloRepository;
+import com.company.titulo.model.repository.TituloRepository;
 
 
 @Controller
@@ -21,11 +21,16 @@ import com.company.titulo.model.repository.ITituloRepository;
 public class TituloController {
 	
 	@Autowired
-	private ITituloRepository tituloRepository;
+	private TituloRepository tituloRepository;
 	
 	@RequestMapping
-	public String pesquisar() {
-		return "pesquisarTitulos";
+	public ModelAndView pesquisar() {
+		List<Titulo> obterTitulos = this.tituloRepository.findAll();
+		
+		ModelAndView mv = new ModelAndView("pesquisarTitulos");
+		mv.addObject("titulos", obterTitulos);
+		
+		return mv;
 	}
 	
 	@RequestMapping("/novo")
@@ -35,7 +40,6 @@ public class TituloController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView salvar(Titulo titulo) {
-		
 		this.tituloRepository.save(titulo);
 		
 		ModelAndView mv = new ModelAndView("cadastrarTitulo");
