@@ -1,6 +1,7 @@
 package com.company.titulo.model.entity;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -16,14 +17,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
-
 import com.company.titulo.model.enums.StatusTitulo;
 
 @Entity
 @Table(name = "TITULO")
-public class Titulo {
+public class Titulo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4832158689079353624L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CODIGO", nullable = false)
@@ -32,18 +35,24 @@ public class Titulo {
 	@Column(name = "DESCRICAO", nullable = false)
 	private String descricao;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_VENCIMENTO", nullable = false)
 	private Date dataVencimento;
 	
-	@NumberFormat(pattern = "#,##0.00")
 	@Column(name = "VALOR", nullable = false)
 	private BigDecimal valor;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_STATUS", nullable = false)
 	private StatusTitulo indStatus;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CRIADO_EM", nullable = false)
+	private Date criadoEm;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ALTERADO_EM", nullable = true)
+	private Date alteradoEm;
 	
 	
 	public Long getCodigo() {
@@ -76,10 +85,22 @@ public class Titulo {
 	public void setIndStatus(StatusTitulo indStatus) {
 		this.indStatus = indStatus;
 	}
+	public Date getCriadoEm() {
+		return criadoEm;
+	}
+	public void setCriadoEm(Date criadoEm) {
+		this.criadoEm = criadoEm;
+	}
+	public Date getAlteradoEm() {
+		return alteradoEm;
+	}
+	public void setAlteradoEm(Date alteradoEm) {
+		this.alteradoEm = alteradoEm;
+	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo, dataVencimento, descricao, indStatus, valor);
+		return Objects.hash(codigo, dataVencimento, descricao, indStatus, valor, criadoEm, alteradoEm);
 	}
 	@Override
 	public boolean equals(Object obj) {		

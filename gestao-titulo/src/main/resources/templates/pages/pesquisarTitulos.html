@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="pr-br"
 	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="defaultLayout">
+    xmlns:th="http://www.thymeleaf.org">
     
-<head>
-	<title>Pesquisa de Títulos</title>
-</head>
+<head th:replace="fragments/header :: header"></head>
 
-<section layout:fragment="conteudo">
+<body><div th:insert="fragments/header :: menu"></div></body>
+
+<div class="container">
     <div class="card">
         <div class="card-header">
           <label class="font-weight-bold">Pesquisa de Títulos</label>
@@ -40,8 +38,13 @@
 	th:classappend="${#strings.toString(titulo.indStatus).trim().equalsIgnoreCase('PENDENTE') ? 'badge-danger' : 'badge-success'}">
 							</span>
 	   					</td>
-	   					<td class="text-center">
-	   					
+	   					<td class="text-center align-baseline">
+	   						<a th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" title="Editar">
+	   							<img src="/img/pencil-2x.png" class="img-fluid" title="Editar">
+	   						</a>
+	   						<a>
+	   							<img src="/img/trash-2x.png" class="img-fluid" title="Editar">
+	   						</a>
 	   					</td>
 	   				</tr>
 	   				<tr>
@@ -51,5 +54,6 @@
       		</table>
       	</div>
      </div>
-</section>
+   <div th:include="fragments/footer :: footer"></div> 
+</div>
 </html>
