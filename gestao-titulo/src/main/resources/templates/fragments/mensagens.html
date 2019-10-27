@@ -3,14 +3,17 @@
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org">
 
+  <div th:fragment="success-alert">
     <div id="success-alert" class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
     	<button type="button" class="close" data-dismiss="alert">x</button>
         <span th:text="${mensagem}"></span>
     </div>
-    
-    <div id="error-alert" class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-		<div th:each="detailedError : ${#fields.detailedErrors()}">
-			<span th:text="${detailedError.message}"></span>
+   </div>
+    <div th:fragment="error-alert">
+	    <div id="error-alert" class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError : ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
 		</div>
 	</div>
 </html>

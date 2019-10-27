@@ -8,6 +8,7 @@
 <body><div th:insert="fragments/header :: menu"></div></body>
 
 <div class="container">
+       <div th:insert="fragments/mensagens :: success-alert"></div>
     <div class="card">
         <div class="card-header">
           <label class="font-weight-bold">Pesquisa de Títulos</label>
@@ -42,8 +43,9 @@
 	   						<a th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" title="Editar">
 	   							<img src="/img/pencil-2x.png" class="img-fluid" title="Editar">
 	   						</a>
-	   						<a>
-	   							<img src="/img/trash-2x.png" class="img-fluid" title="Editar">
+	   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#idModalConfirmacaoExclusao"
+	   							th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}">
+	   							<img src="/img/trash-2x.png" class="img-fluid" title="Excluir">
 	   						</a>
 	   					</td>
 	   				</tr>
@@ -52,7 +54,9 @@
 	   				</tr>
       			</tbody>
       		</table>
+      		<div th:replace="fragments/paginacao :: paginacao(${titulos})"></div>
       	</div>
+     		<div th:include="fragments/dialogs :: modalConfirmacaoExclusao"></div>
      </div>
    <div th:include="fragments/footer :: footer"></div> 
 </div>

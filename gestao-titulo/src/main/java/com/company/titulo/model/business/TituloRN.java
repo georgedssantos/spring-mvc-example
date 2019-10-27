@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.company.titulo.model.dto.TituloDto;
@@ -17,7 +19,7 @@ public class TituloRN {
 	@Autowired
 	private TituloRepository tituloRepository;
 	
-	public List<TituloDto> obterTitulos() {
+	public List<TituloDto> obterTitulosDto() {
 		List<Titulo> titulos = this.tituloRepository.findAll();
 		List<TituloDto>  titulosDto =new ArrayList<>();
 		for (Titulo titulo : titulos) {
@@ -25,6 +27,12 @@ public class TituloRN {
 			titulosDto.add(tituloDto);
 		}
 		return titulosDto;
+	}
+	
+	public Page<Titulo> titulosPage(Integer page, Integer size) {
+		Page<Titulo> titulos = this.tituloRepository.findAll(PageRequest.of(page, size));
+		//final Page<TituloDto> pages = new PageImpl<>(titulosDto);
+		return titulos;
 	}
 	
 	public void salvar(TituloDto tituloDto) {
@@ -38,6 +46,10 @@ public class TituloRN {
 		titulo.setAlteradoEm(tituloDto.getCodigo()!=null ? new Date() : null);
 		
 		this.tituloRepository.save(titulo);
+	}
+	
+	public void excluir(Long codigo) {
+		this.tituloRepository.deleteById(codigo);
 	}
 	
 	public TituloDto popularTituloDto(Titulo titulo) {

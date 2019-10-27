@@ -4,21 +4,6 @@
     xmlns:th="http://www.thymeleaf.org">
     
 <head th:replace="fragments/header :: header"></head>
-	<script type="text/javascript">  
-        (function () {  
-            'use strict';  
-            window.addEventListener('load', function () {  
-                var form = document.getElementById('titulo-validation');  
-                form.addEventListener('submit', function (event) {  
-                    if (form.checkValidity() === false) {  
-                        event.preventDefault();  
-                        event.stopPropagation();  
-                    }  
-                    form.classList.add('was-validated');  
-                }, false);  
-            }, false);  
-        })();
-    </script> 
 
 <body><div th:insert="fragments/header :: menu"></div></body>
 

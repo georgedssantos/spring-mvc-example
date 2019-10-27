@@ -4,8 +4,11 @@ package com.company.titulo.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,15 +33,36 @@ public class TituloController {
 	@Autowired
 	private TituloRN tituloRN;
 	
-	@RequestMapping
-	public ModelAndView pesquisar() {
-		List<TituloDto> obterTitulos = this.tituloRN.obterTitulos();
-		
-		ModelAndView mv = new ModelAndView(PESQUISAR_TITULO_VIEW);
-		mv.addObject("titulos", obterTitulos);
-		
-		return mv;
-	}
+	/*
+	 * @RequestMapping 
+	 * public ModelAndView pesquisar() { 
+	 * List<TituloDto> obterTitulos = this.tituloRN.obterTitulos();
+	 * 
+	 * ModelAndView mv = new ModelAndView(PESQUISAR_TITULO_VIEW);
+	 * mv.addObject("titulos", obterTitulos);
+	 * 
+	 * return mv; 
+	 * }
+	 */
+	
+	@RequestMapping 
+    public String pesquisar(HttpServletRequest request, Model model) {
+        
+        int page = 0; //DEFAULT PAGE NUMBER IS 0 (YES IT IS WEIRD)
+        int size = 5; //DEFAULT PAGE SIZE IS 5
+        
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
+        
+        model.addAttribute("titulos", this.tituloRN.titulosPage(page, size));
+        
+        return PESQUISAR_TITULO_VIEW;
+    }
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
@@ -65,6 +89,14 @@ public class TituloController {
 		ModelAndView mv = new ModelAndView(CADASTRAR_TITULO_VIEW); 
 		mv.addObject("tituloDto", tituloDto);
 		return mv;
+	}
+	
+	@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
+	public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
+		this.tituloRN.excluir(codigo);
+		
+		attributes.addFlashAttribute("mensagem", "Título excluído com sucesso!");
+		return "redirect:/titulos";
 	}
 		
 	@ModelAttribute("todosStatusTitulo")
