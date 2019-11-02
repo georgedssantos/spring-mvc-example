@@ -8,7 +8,7 @@
 <!-- <p th:text="${objeto.totalPages}"></p> -->
 
 <nav th:if="${objeto.totalPages gt 0}">
-    <ul class="pagination justify-content-end">
+    <ul class="pagination pg-blue justify-content-end">
         <li class="page-item" th:classappend="${objeto.number eq 0} ? 'disabled'">
             <a class="page-link"
                th:href="@{/titulos?page={id}(id=${objeto.number lt 2 ? 1 : objeto.number})}"

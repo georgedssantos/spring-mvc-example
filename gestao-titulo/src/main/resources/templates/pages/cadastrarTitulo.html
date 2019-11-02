@@ -3,6 +3,22 @@
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org">
     
+ <script>
+(function () {  
+	'use strict';  
+	window.addEventListener('load', function () {  
+		var form = document.getElementById('titulo-validation');  
+          form.addEventListener('submit', function (event) {  
+              if (form.checkValidity() === false) {  
+                  event.preventDefault();  
+                  event.stopPropagation();  
+               }  
+               form.classList.add('was-validated');  
+          }, false);  
+    }, false);  
+})();
+</script>
+    
 <head th:replace="fragments/header :: header"></head>
 
 <body><div th:insert="fragments/header :: menu"></div></body>
@@ -27,14 +43,19 @@
             <div class="form-group row" th:classappend="${#fields.hasErrors('dataVencimento')} ? was-validated">
               <label for="dataVencimento" class="col-sm-2 col-form-label text-right">Data de Vencimento</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control" id="dataVencimento" placeholder="dd/mm/yyyy" th:field="*{dataVencimento}" required/>
+                <input type="text" class="form-control" id="dataVencimento" placeholder="dd/mm/yyyy" th:field="*{dataVencimento}" required 
+                			data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+							data-date-autoclose="true" data-date-today-highlight="true" data-date-orientation="bottom"/>
                 <div class="invalid-feedback">Data de vencimento é obrigatória.</div>  
               </div>
+              <!-- <div class="text-center align-baseline">
+        			<span class="glyphicon glyphicon-calendar"></span>
+    			</div> -->
             </div>
             <div class="form-group row" th:classappend="${#fields.hasErrors('valor')} ? was-validated" >
               <label for="valor" class="col-sm-2 col-form-label text-right">Valor</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control" id="valor" placeholder="0,00" th:field="*{valor}" required/>
+                <input type="text" class="form-control js-currency" id="valor" placeholder="0,00" th:field="*{valor}" required/>
                 <div class="invalid-feedback">Valor é obrigatório.</div>
               </div>
             </div>

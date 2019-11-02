@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -36,16 +37,22 @@ public class TituloRN {
 	}
 	
 	public void salvar(TituloDto tituloDto) {
-		Titulo titulo = new Titulo();
-		titulo.setCodigo(tituloDto.getCodigo());
-		titulo.setDescricao(tituloDto.getDescricao());
-		titulo.setDataVencimento(tituloDto.getDataVencimento());
-		titulo.setValor(tituloDto.getValor());
-		titulo.setIndStatus(tituloDto.getIndStatus());
-		titulo.setCriadoEm(new Date());
-		titulo.setAlteradoEm(tituloDto.getCodigo()!=null ? new Date() : null);
 		
-		this.tituloRepository.save(titulo);
+		try {
+			Titulo titulo = new Titulo();
+			titulo.setCodigo(tituloDto.getCodigo());
+			titulo.setDescricao(tituloDto.getDescricao());
+			titulo.setDataVencimento(tituloDto.getDataVencimento());
+			titulo.setValor(tituloDto.getValor());
+			titulo.setIndStatus(tituloDto.getIndStatus());
+			titulo.setCriadoEm(new Date());
+			titulo.setAlteradoEm(tituloDto.getCodigo()!=null ? new Date() : null);
+			
+			this.tituloRepository.save(titulo);
+	
+		} catch (DataIntegrityViolationException e) {
+			throw new IllegalArgumentException("Formato de data inválida.");
+		}
 	}
 	
 	public void excluir(Long codigo) {

@@ -40,12 +40,14 @@
 							</span>
 	   					</td>
 	   					<td class="text-center align-baseline">
-	   						<a th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" title="Editar">
-	   							<img src="/img/pencil-2x.png" class="img-fluid" title="Editar">
+	   					    <a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" 
+	   								rel="tooltip" data-placement="top" title="Editar">
+	   							<img src="/img/pencil-2x.png" class="img-fluid"/>
 	   						</a>
 	   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#idModalConfirmacaoExclusao"
-	   							th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}">
-	   							<img src="/img/trash-2x.png" class="img-fluid" title="Excluir">
+	   							th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}"
+	   								rel="tooltip" data-placement="top" title="Excluir">
+	   							<img src="/img/trash-2x.png" class="img-fluid"/>
 	   						</a>
 	   					</td>
 	   				</tr>

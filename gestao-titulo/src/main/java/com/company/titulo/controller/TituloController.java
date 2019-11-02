@@ -76,11 +76,15 @@ public class TituloController {
 		if(errors.hasErrors()) {
 			return CADASTRAR_TITULO_VIEW;
 		}
-
-		this.tituloRN.salvar(tituloDto);
 		
-		attributes.addFlashAttribute("mensagem", tituloDto.getCodigo()==null ? "Título salvo com sucesso!" : "Título alterado com sucesso!");
-		return "redirect:/titulos/novo"; 
+		try {
+			this.tituloRN.salvar(tituloDto);		
+			attributes.addFlashAttribute("mensagem", tituloDto.getCodigo()==null ? "Título salvo com sucesso!" : "Título alterado com sucesso!");
+			return "redirect:/titulos/novo"; 
+		} catch (IllegalArgumentException e) {
+			errors.rejectValue("dataVencimento", null, e.getMessage());
+			return CADASTRAR_TITULO_VIEW;
+		}
 	}
 	
 	@RequestMapping("{codigo}")
