@@ -36,16 +36,18 @@
             <div class="form-group row" th:classappend="${#fields.hasErrors('descricao')} ? was-validated">
               <label for="descricao" class="col-sm-2 col-form-label text-right">Descrição</label>
               <div class="col-sm-4">
-                <input type="text" class="form-control required" id="descricao" placeholder="Ex: Condomínio 601" maxlength="60" th:field="*{descricao}" required/>
+                <input type="text" class="form-control required" id="descricao" placeholder="Descrição do Título" 
+                	   maxlength="60" th:field="*{descricao}" required/>
                 <div class="invalid-feedback">Descrição é obrigatória.</div>  
               </div>
             </div>
             <div class="form-group row" th:classappend="${#fields.hasErrors('dataVencimento')} ? was-validated">
               <label for="dataVencimento" class="col-sm-2 col-form-label text-right">Data de Vencimento</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control" id="dataVencimento" placeholder="dd/mm/yyyy" th:field="*{dataVencimento}" required 
-                			data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
-							data-date-autoclose="true" data-date-today-highlight="true" data-date-orientation="bottom"/>
+                <input type="text" class="form-control js-datepicker" id="dataVencimento" placeholder="dd/mm/yyyy" 
+                			th:field="*{dataVencimento}" required 
+                			data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true" 
+                			data-date-orientation="bottom"/>
                 <div class="invalid-feedback">Data de vencimento é obrigatória.</div>  
               </div>
               <!-- <div class="text-center align-baseline">
@@ -71,7 +73,7 @@
             </div> 
             <div class="form-group row">
               <div class="col-sm-2 offset-md-2">
-                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button type="submit" class="btn btn-primary btn-sm"><span th:text="*{codigo==null ? 'Salvar' : 'Alterar'}"></span></button>
               </div>
             </div>
       	</div>

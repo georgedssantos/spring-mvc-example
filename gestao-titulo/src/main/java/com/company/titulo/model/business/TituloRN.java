@@ -7,11 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.company.titulo.model.criteria.TituloCriteria;
 import com.company.titulo.model.dto.TituloDto;
 import com.company.titulo.model.entity.Titulo;
+import com.company.titulo.model.enums.StatusTitulo;
 import com.company.titulo.model.repository.TituloRepository;
 
 @Service
@@ -22,7 +25,7 @@ public class TituloRN {
 	
 	public List<TituloDto> obterTitulosDto() {
 		List<Titulo> titulos = this.tituloRepository.findAll();
-		List<TituloDto>  titulosDto =new ArrayList<>();
+		List<TituloDto> titulosDto =new ArrayList<>();
 		for (Titulo titulo : titulos) {
 			TituloDto tituloDto = popularTituloDto(titulo);
 			titulosDto.add(tituloDto);
@@ -30,10 +33,25 @@ public class TituloRN {
 		return titulosDto;
 	}
 	
-	public Page<Titulo> titulosPage(Integer page, Integer size) {
-		Page<Titulo> titulos = this.tituloRepository.findAll(PageRequest.of(page, size));
-		//final Page<TituloDto> pages = new PageImpl<>(titulosDto);
-		return titulos;
+	public Page<TituloDto> pesquisarTitulosPage(TituloCriteria tituloCriteria, Integer page, Integer size) {
+		//Page<Titulo> titulos = this.tituloRepository.findAll(PageRequest.of(page, size));
+		String descricao = tituloCriteria == null || tituloCriteria.getDescricao() == null ? "" : tituloCriteria.getDescricao();
+		Page<Titulo> titulos = this.tituloRepository.findByDescricaoContainingIgnoreCase(descricao, PageRequest.of(page, size));
+		List<TituloDto> titulosDto =new ArrayList<>();
+		for (Titulo titulo : titulos) {
+			TituloDto tituloDto = popularTituloDto(titulo);
+			titulosDto.add(tituloDto);
+		}
+		Page<TituloDto> pages = new PageImpl<>(titulosDto);
+		return pages;
+	}
+	
+	public String receber(Long codigo) {
+		Titulo titulo = this.tituloRepository.getOne(codigo);
+		titulo.setIndStatus(StatusTitulo.RECEBIDO);
+		this.tituloRepository.save(titulo);
+		
+		return StatusTitulo.RECEBIDO.getDescricao();
 	}
 	
 	public void salvar(TituloDto tituloDto) {

@@ -15,6 +15,21 @@
           <a class="btn btn-dark btn-sm float-right" href="/titulos/novo" role="button">Novo Título</a>
         </div>
         <div class="card-body">
+        <form method="GET" class="form-horizontal" action="/titulos" th:object="${tituloCriteria}">
+	   			<div class="form-group row">
+	   				<div class="col-sm-4">
+	   					<div class="input-group">
+	   						<input type="text" class="form-control" placeholder="Qual título você está procurando?"
+	   							autofocus="autofocus" th:field="*{descricao}"></input>
+	   						<span class="input-group-btn">
+	   							<button type="submit" class="btn btn-default">
+	   								<i class="glyphicon glyphicon-search"></i>
+	   							</button>
+	   						</span>
+	   					</div>
+	   				</div>
+	   			</div>
+	   		</form>
 			<table class="table table-sm table-bordered table-striped">
 			 <caption>Lista de títulos</caption>
       			<thead class="thead-dark">
@@ -34,7 +49,7 @@
 	   					
 	   					<td class="text-center" th:text="${#dates.format(titulo.dataVencimento, 'dd/MM/yyyy')}"></td>
 	   					<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
-						<td class="text-center">
+						<td class="text-center" th:attr="data-role=${titulo.codigo}">
 	   						<span class="badge" th:text="${titulo.indStatus.descricao}"
 	th:classappend="${#strings.toString(titulo.indStatus).trim().equalsIgnoreCase('PENDENTE') ? 'badge-danger' : 'badge-success'}">
 							</span>
@@ -42,12 +57,18 @@
 	   					<td class="text-center align-baseline">
 	   					    <a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" 
 	   								rel="tooltip" data-placement="top" title="Editar">
-	   							<img src="/img/pencil-2x.png" class="img-fluid"/>
+	   							<img src="/img/pencil-2x.png"/>
 	   						</a>
 	   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#idModalConfirmacaoExclusao"
 	   							th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}"
 	   								rel="tooltip" data-placement="top" title="Excluir">
-	   							<img src="/img/trash-2x.png" class="img-fluid"/>
+	   							<img src="/img/trash-2x.png" />
+	   						</a>
+	   						<a class="btn btn-link btn-xs js-atualizar-status" th:if="${titulo.pendente}"
+	   								rel="tooltip" data-placement="top" title="Receber"
+	   								th:attr="data-codigo=${titulo.codigo}"
+	   								th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}">
+	   							<span class="glyphicon glyphicon-check"></span>
 	   						</a>
 	   					</td>
 	   				</tr>

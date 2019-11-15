@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.company.titulo.model.business.TituloRN;
+import com.company.titulo.model.criteria.TituloCriteria;
 import com.company.titulo.model.dto.TituloDto;
 import com.company.titulo.model.entity.Titulo;
 import com.company.titulo.model.enums.StatusTitulo;
@@ -46,7 +48,7 @@ public class TituloController {
 	 */
 	
 	@RequestMapping 
-    public String pesquisar(HttpServletRequest request, Model model) {
+    public String pesquisar(HttpServletRequest request, Model model, @ModelAttribute("tituloCriteria") TituloCriteria tituloCriteria) {
         
         int page = 0; //DEFAULT PAGE NUMBER IS 0 (YES IT IS WEIRD)
         int size = 5; //DEFAULT PAGE SIZE IS 5
@@ -59,7 +61,7 @@ public class TituloController {
             size = Integer.parseInt(request.getParameter("size"));
         }
         
-        model.addAttribute("titulos", this.tituloRN.titulosPage(page, size));
+        model.addAttribute("titulos", this.tituloRN.pesquisarTitulosPage(tituloCriteria, page, size));
         
         return PESQUISAR_TITULO_VIEW;
     }
@@ -80,7 +82,8 @@ public class TituloController {
 		try {
 			this.tituloRN.salvar(tituloDto);		
 			attributes.addFlashAttribute("mensagem", tituloDto.getCodigo()==null ? "Título salvo com sucesso!" : "Título alterado com sucesso!");
-			return "redirect:/titulos/novo"; 
+			
+			return tituloDto.getCodigo()==null ? "redirect:/titulos/novo" : "redirect:/titulos"; 
 		} catch (IllegalArgumentException e) {
 			errors.rejectValue("dataVencimento", null, e.getMessage());
 			return CADASTRAR_TITULO_VIEW;
@@ -101,6 +104,11 @@ public class TituloController {
 		
 		attributes.addFlashAttribute("mensagem", "Título excluído com sucesso!");
 		return "redirect:/titulos";
+	}
+	
+	@RequestMapping(value = "/{codigo}/receber", method = RequestMethod.PUT)
+	public @ResponseBody String receber(@PathVariable Long codigo) {
+		return this.tituloRN.receber(codigo);
 	}
 		
 	@ModelAttribute("todosStatusTitulo")

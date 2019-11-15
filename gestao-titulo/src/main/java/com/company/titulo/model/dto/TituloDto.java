@@ -84,6 +84,10 @@ public class TituloDto implements Serializable {
 		this.indStatus = indStatus;
 	}
 	
+	public boolean isPendente() {
+		return StatusTitulo.PENDENTE.equals(this.indStatus);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo, dataVencimento, descricao, indStatus, valor);

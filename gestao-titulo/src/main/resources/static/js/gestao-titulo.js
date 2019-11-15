@@ -33,6 +33,41 @@ $('#idModalConfirmacaoExclusao').on('show.bs.modal', function (event) {
 $(function() {
 	$('[rel="tooltip"]').tooltip();
 	$('.js-currency').maskMoney({decimal: ',', thousands: '.', allowZero: true});
+	$('.js-datepicker').datepicker({
+	    format: 'dd/mm/yyyy',                
+	    language: 'pt-BR'
+	});
+	
+	$('.js-atualizar-status').on('click', function(event) {
+		
+		//NAO FAZER O COMPARTAMENTO PADRAO DO LINK, NAO IR PARA O CONTROLER
+		event.preventDefault();
+		
+		//console.log('click');
+		
+		var botaoReceber = $(event.currentTarget);
+		var urlReceber = botaoReceber.attr('href');
+		
+		//console.log('urlReceber', urlReceber);
+		
+		var response = $.ajax({
+			url: urlReceber,
+			type: 'PUT'
+		});
+		
+		
+		response.done(function(e) {
+			var codigoTitulo = botaoReceber.data('codigo');
+			$('[data-role=' + codigoTitulo + ']').html('<span class="badge badge-success">' + e + '</span>');
+			botaoReceber.hide();
+		});
+		
+		response.fail(function(e) {
+			console.log(e);
+			alert('Erro recebendo cobrança');
+		});
+				
+	});
 });
 
 
