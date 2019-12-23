@@ -24,12 +24,12 @@
 <body><div th:insert="fragments/header :: menu"></div></body>
 
 <div class="container">
-    <form id="titulo-validation" novalidate class="form-horizontal" method="POST" action="/titulos" th:object="${tituloDto}">
+    <form id="titulo-validation" novalidate class="form-horizontal" method="POST" th:action="@{/titulos}" th:object="${tituloDto}">
 		<div th:include="~{fragments/mensagens}"></div>
     <div class="card">
         <div class="card-header">
           <label class="font-weight-bold">Novo Título</label>
-          <a class="btn btn-dark btn-sm float-right" href="/titulos" role="button">Voltar</a>
+          <a class="btn btn-dark btn-sm float-right" th:href="@{/titulos}" role="button">Voltar</a>
         </div>
         <div class="card-body">
         	<input type="hidden" th:field="*{codigo}"/>

@@ -1,5 +1,5 @@
-$("#success-alert").fadeTo(6000, 1500).slideUp(1500, function(){
-    $("#success-alert").slideUp(1500);
+$("#success-alert").fadeTo(4000, 1000).slideUp(1000, function(){
+    $("#success-alert").slideUp(1000);
 });
 
 $('#idModalConfirmacaoExclusao').on('show.bs.modal', function (event) {

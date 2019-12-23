@@ -32,8 +32,39 @@
   <body>
 
 	<div th:fragment="menu">
-	     	<nav class="navbar navbar-dark bg-dark">
-			<span class="navbar-brand mb-0 h1">Gestão de Títulos</span>
+		<nav class="navbar navbar-dark bg-dark">
+		  <span class="navbar-brand mb-0 h1">Gestão de Títulos</span>
+		  <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+		
+		
+		
+		    <ul class="navbar-nav ml-auto nav-flex-icons">
+		      <li class="nav-item avatar">
+		        <a class="nav-link p-0" href="#">
+		          <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-11.jpg" class="rounded-circle z-depth-0" height="35"> -->
+		          <img th:src="@{/img/photos/avatar-01.jpg}" class="rounded-circle z-depth-0" height="35">
+		        </a>
+		      </li>
+		    </ul>
+		    
+		    
+		    
+		    <ul class="navbar-nav navbar-right">
+		     <!-- <li><a class="nav-link p-2" href="#"><span class="glyphicon glyphicon-user"></span> George Santos - ADM</a></li> -->
+		      <li><a class="nav-link p-2" href="#"><span></span> George Santos - ADM</a></li>
+		    </ul>
+		       <ul class="navbar-nav navbar-right">
+		      <!-- <li><a class="nav-link p-2" href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li> -->
+		      <li>
+	      		<form th:action="@{/logout}" method="post" class="navbar-form navbar-right">
+	        		<button type="submit" class="btn btn-link nav-link">
+	        			<span class="glyphicon glyphicon-log-out"></span> Sair
+	        		</button>
+	        		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		      	</form>
+		      </li>
+		    </ul>
+		
 		</nav>
 		<br/>
     </div>

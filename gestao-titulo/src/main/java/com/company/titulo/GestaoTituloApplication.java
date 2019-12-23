@@ -19,5 +19,14 @@ public class GestaoTituloApplication {
 	public LocaleResolver localeResolver() {
 		return new FixedLocaleResolver(new Locale("pt", "BR"));
 	}
+	
+	/*
+	 * @Configuration public static class WebMvcConfig implements WebMvcConfigurer {
+	 * 
+	 * @Override public void addViewControllers(ViewControllerRegistry registry) {
+	 * registry.addRedirectViewController("/", "pages/pesquisarTitulos"); }
+	 * 
+	 * }
+	 */
 
 }

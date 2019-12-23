@@ -1,13 +1,10 @@
 package com.company.titulo.model.business;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -23,29 +20,15 @@ public class TituloRN {
 	@Autowired
 	private TituloRepository tituloRepository;
 	
-	public List<TituloDto> obterTitulosDto() {
-		List<Titulo> titulos = this.tituloRepository.findAll();
-		List<TituloDto> titulosDto =new ArrayList<>();
-		for (Titulo titulo : titulos) {
-			TituloDto tituloDto = popularTituloDto(titulo);
-			titulosDto.add(tituloDto);
-		}
-		return titulosDto;
-	}
-	
 	public Page<TituloDto> pesquisarTitulosPage(TituloCriteria tituloCriteria, Integer page, Integer size) {
 		//Page<Titulo> titulos = this.tituloRepository.findAll(PageRequest.of(page, size));
+		
 		String descricao = tituloCriteria == null || tituloCriteria.getDescricao() == null ? "" : tituloCriteria.getDescricao();
 		Page<Titulo> titulos = this.tituloRepository.findByDescricaoContainingIgnoreCase(descricao, PageRequest.of(page, size));
-		List<TituloDto> titulosDto =new ArrayList<>();
-		for (Titulo titulo : titulos) {
-			TituloDto tituloDto = popularTituloDto(titulo);
-			titulosDto.add(tituloDto);
-		}
-		Page<TituloDto> pages = new PageImpl<>(titulosDto);
-		return pages;
+		
+		return titulos.map(Titulo -> popularTituloDto(Titulo));		
 	}
-	
+		
 	public String receber(Long codigo) {
 		Titulo titulo = this.tituloRepository.getOne(codigo);
 		titulo.setIndStatus(StatusTitulo.RECEBIDO);

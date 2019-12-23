@@ -12,10 +12,10 @@
     <div class="card">
         <div class="card-header">
           <label class="font-weight-bold">Pesquisa de Títulos</label>
-          <a class="btn btn-dark btn-sm float-right" href="/titulos/novo" role="button">Novo Título</a>
+          <a class="btn btn-dark btn-sm float-right" th:href="@{/titulos/novo}" role="button">Novo Título</a>
         </div>
         <div class="card-body">
-        <form method="GET" class="form-horizontal" action="/titulos" th:object="${tituloCriteria}">
+        <form method="GET" class="form-horizontal" th:action="@{/titulos}" th:object="${tituloCriteria}">
 	   			<div class="form-group row">
 	   				<div class="col-sm-4">
 	   					<div class="input-group">
@@ -30,6 +30,7 @@
 	   				</div>
 	   			</div>
 	   		</form>
+	   	<div class="table-responsive">
 			<table class="table table-sm table-bordered table-striped">
 			 <caption>Lista de títulos</caption>
       			<thead class="thead-dark">
@@ -57,12 +58,12 @@
 	   					<td class="text-center align-baseline">
 	   					    <a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" 
 	   								rel="tooltip" data-placement="top" title="Editar">
-	   							<img src="/img/pencil-2x.png"/>
+	   							<img th:src="@{/img/pencil-2x.png}"/>
 	   						</a>
 	   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#idModalConfirmacaoExclusao"
 	   							th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}"
 	   								rel="tooltip" data-placement="top" title="Excluir">
-	   							<img src="/img/trash-2x.png" />
+	   							<img th:src="@{/img/trash-2x.png}" />
 	   						</a>
 	   						<a class="btn btn-link btn-xs js-atualizar-status" th:if="${titulo.pendente}"
 	   								rel="tooltip" data-placement="top" title="Receber"
@@ -77,6 +78,7 @@
 	   				</tr>
       			</tbody>
       		</table>
+      	</div>
       		<div th:replace="fragments/paginacao :: paginacao(${titulos})"></div>
       	</div>
      		<div th:include="fragments/dialogs :: modalConfirmacaoExclusao"></div>

@@ -35,17 +35,6 @@ public class TituloController {
 	@Autowired
 	private TituloRN tituloRN;
 	
-	/*
-	 * @RequestMapping 
-	 * public ModelAndView pesquisar() { 
-	 * List<TituloDto> obterTitulos = this.tituloRN.obterTitulos();
-	 * 
-	 * ModelAndView mv = new ModelAndView(PESQUISAR_TITULO_VIEW);
-	 * mv.addObject("titulos", obterTitulos);
-	 * 
-	 * return mv; 
-	 * }
-	 */
 	
 	@RequestMapping 
     public String pesquisar(HttpServletRequest request, Model model, @ModelAttribute("tituloCriteria") TituloCriteria tituloCriteria) {
