@@ -4,6 +4,7 @@
     xmlns:th="http://www.thymeleaf.org">
     
 <head th:replace="fragments/header :: header"></head>
+<meta name="csrf-token" th:content="${_csrf.token}"/>
 
 <body><div th:insert="fragments/header :: menu"></div></body>
 

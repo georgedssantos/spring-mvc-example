@@ -69,9 +69,9 @@ public class TituloController {
 		}
 		
 		try {
-			this.tituloRN.salvar(tituloDto);		
-			attributes.addFlashAttribute("mensagem", tituloDto.getCodigo()==null ? "Título salvo com sucesso!" : "Título alterado com sucesso!");
+			this.tituloRN.salvar(tituloDto);
 			
+			attributes.addFlashAttribute("mensagem", tituloDto.getCodigo()==null ? "Título salvo com sucesso!" : "Título alterado com sucesso!");
 			return tituloDto.getCodigo()==null ? "redirect:/titulos/novo" : "redirect:/titulos"; 
 		} catch (IllegalArgumentException e) {
 			errors.rejectValue("dataVencimento", null, e.getMessage());

@@ -1,5 +1,5 @@
-$("#success-alert").fadeTo(4000, 1000).slideUp(1000, function(){
-    $("#success-alert").slideUp(1000);
+$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#success-alert").slideUp(500);
 });
 
 $('#idModalConfirmacaoExclusao').on('show.bs.modal', function (event) {
@@ -50,9 +50,16 @@ $(function() {
 		
 		//console.log('urlReceber', urlReceber);
 		
+		//TRATAMENTO DE ERRO CSRF PARA RESPONSE PUT
+		 var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');;
+		 //console.log(token);
+		
 		var response = $.ajax({
 			url: urlReceber,
-			type: 'PUT'
+			type: 'PUT',
+			headers: {
+                'X-CSRF-Token': token 
+           },
 		});
 		
 		
