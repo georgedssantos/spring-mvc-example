@@ -7,8 +7,8 @@
 * Spring Boot
 * Spring Security
 * Spring MVC
+* Spring Data JPA
 * Bootstrap
 * Thymeleaf
 * JQuery
-* Paginação de forma lazy
 * Design Responsivo
